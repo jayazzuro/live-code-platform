@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const configViewEngine = require("./config/viewEngine.js");
+const path = require("path");
 const code_sessions = require("./routes/codeSession.routes.js");
 const executions = require("./routes/executions.routes.js");
 
