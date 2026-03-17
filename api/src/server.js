@@ -12,7 +12,7 @@ const hostname = process.env.HOST_NAME;
 configViewEngine(app);
 
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/index.html"));
+  res.sendFile(path.join(__dirname, "../../public/index.html"));
 });
 
 app.use("/code-sessions", code_sessions);
