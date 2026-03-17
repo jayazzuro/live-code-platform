@@ -76,16 +76,9 @@ print("Hello World")
         document.getElementById("output").innerText = "Running...";
 
         try {
-          const session = await fetch(API + "/code-sessions", {
+          // create session
+          const sessionRes = await fetch(API + "/code-sessions", {
             method: "POST",
-          });
-
-          const sessionData = await session.json();
-
-          const sessionId = sessionData.session_id;
-
-          await fetch(API + "/code-sessions/" + sessionId, {
-            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -95,20 +88,23 @@ print("Hello World")
             }),
           });
 
-          const run = await fetch(
+          const sessionData = await sessionRes.json();
+          const sessionId = sessionData.session_id;
+
+          // run code
+          const runRes = await fetch(
             API + "/code-sessions/" + sessionId + "/run",
             {
               method: "POST",
             }
           );
 
-          const runData = await run.json();
-
+          const runData = await runRes.json();
           const executionId = runData.execution_id;
 
+          // wait worker
           setTimeout(async () => {
             const result = await fetch(API + "/executions/" + executionId);
-
             const data = await result.json();
 
             document.getElementById("output").innerText =
