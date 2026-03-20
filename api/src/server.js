@@ -1,5 +1,4 @@
 require("dotenv").config();
-require("./worker");
 const express = require("express");
 const configViewEngine = require("./config/viewEngine.js");
 const path = require("path");

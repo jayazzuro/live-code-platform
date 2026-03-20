@@ -11,31 +11,18 @@ exports.createSession = async (req, res) => {
     const session = await prisma.code_sessions.create({
       data: {
         session_id: id,
-        language: language,
+        language,
         source_code: sourceCode,
         status: "ACTIVE",
       },
     });
 
-    const execution = await prisma.executions.create({
-      data: {
-        execution_id: randomUUID(),
-        session_id: session.session_id,
-        status: "PENDING",
-      },
-    });
-
-    await executionQueue.add({
-      execution_id: execution.execution_id,
-    });
-
-    res.status(201).json({
+    return res.status(201).json({
       session_id: session.session_id,
-      execution_id: execution.execution_id,
       status: session.status,
     });
   } catch (error) {
-    res.status(500).json({ detail: error.message });
+    return res.status(500).json({ detail: error.message });
   }
 };
 

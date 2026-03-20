@@ -11,7 +11,7 @@ exports.getExecution = async (req, res) => {
     });
 
     if (!e) {
-      return res.status(404).json({ detail: error.message });
+      return res.status(404).json({ detail: "Execution not found" });
     }
 
     res.json({

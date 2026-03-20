@@ -23,6 +23,8 @@ services:
     depends_on:
       - redis
       - livecode-db
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   livecode-db:
     image: ankane/pgvector:latest
@@ -35,7 +37,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./db-init/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      # - ./db-init/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
